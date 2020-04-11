@@ -46,3 +46,25 @@ export default () => {
 
   )
 }
+
+
+/**
+ * 
+ * steps to follow:
+ *    npm i aws-amplify
+ *   create a config similar to:
+ * 
+ * s3: {
+    REGION: "YOUR_S3_UPLOADS_BUCKET_REGION",
+    BUCKET: "YOUR_S3_UPLOADS_BUCKET_NAME"
+  },
+  cognito: {
+    REGION: "YOUR_COGNITO_REGION",
+    USER_POOL_ID: "YOUR_COGNITO_USER_POOL_ID",
+    APP_CLIENT_ID: "YOUR_COGNITO_APP_CLIENT_ID",
+    IDENTITY_POOL_ID: "YOUR_IDENTITY_POOL_ID"
+  }
+};
+ *
+ * 
+ */

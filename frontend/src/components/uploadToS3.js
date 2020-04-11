@@ -52,4 +52,12 @@ why/where stopped
 this wil be called from an express server for get and put urls
 the front end will then take the image uploads and add or retrieve from them using the urls
 the problem with this is that anyone can add or modify, even if they images do not belong to the user
-, must tie to sign in token , use identitypool
+
+a better approach would to add auth and s3 upload using amplify
+the problem with this is that i must create auth from scratch
+and i don't understand graphql enough!
+
+watch web bos ' tutorial '??
+
+
+*/
