@@ -30,7 +30,7 @@ const ImageDisplay = ({searchTerm, images}) => {
     }
     */
 	return (
-    <div>
+    <div className='ui raised segment'>
       <Gallery photos={images} onClick={openLightbox} />
       <ModalGateway>
         {viewerIsOpen ? (

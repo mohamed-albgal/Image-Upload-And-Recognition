@@ -8,12 +8,15 @@ const SearchBar = (props) => {
 		//search term is 'exported' to parent component (App)
 		props.extractTerm(term);
 	};
+	const inputStyle = {
+		fontSize:'1.4em'
+	}
 	return (
-		<div className="ui segment">
+		<div className="ui category search ui raised segment">
 			<form onSubmit={e => onFormSubmit(e)} className="ui form">
 				<div className="field">
 				<label>Image Search</label>
-					<input type="text"
+					<input style={inputStyle} type="text"
 					value={term}
 					onChange={e => setTerm(e.target.value)}>
 				</input>

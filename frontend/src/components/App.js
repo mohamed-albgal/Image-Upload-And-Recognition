@@ -1,36 +1,43 @@
-import React from 'react';
-import { Route, Switch } from 'react-router-dom'
+import React, { useState, useEffect, useContext } from 'react';
 import Header from './Header'
 import Footer from './Footer'
-import HomeContent from './HomeContent'
-import ImageUploader from './ImageUploader'
-import SignUp from './SignUp'
-import SignIn from './SignIn'
-
+import Routes from './Routes'
+import { Amplify, Auth } from 'aws-amplify'
+import {AuthContext} from './AuthContext'
+import awsConfig from '../config'
+import { Redirect } from 'react-router-dom';
+Amplify.configure(awsConfig.amplify);
 
 const appStyle =  {
-  display: 'flex',
-  justifyContent:'flex-start',
   height: '100%',
-  flexDirection: 'column',
-  paddingTop: '3vh',
-  background: '#f9f8ff'
+  paddingTop: '10vh',
+  background: '#f9f8ff',
 }
 
-export default () => {
-	return (
-		<div style={appStyle} >
-			<div>
-				<Header />
-				<Switch>
-					<Route exact path="/" component={HomeContent}  />
-					<Route path="/signIn" component={SignIn} />
-					<Route path="/signUp" component={SignUp} />
-					<Route path="/upload" component ={ImageUploader} />
-				</Switch>
-				<Footer />
-			</div>
-		</div>
+const App =  () => {
+	const [loggedIn, setLoggedIn] = useState(false);
+	useEffect(() =>{
+		checkForSession();
+	},[])
 
+	const checkForSession = async () => {
+		try {
+			await Auth.currentSession();
+			setLoggedIn(true);
+		}catch(err) {
+			console.log('no session');
+			console.log(err);
+		}
+	}
+	return (
+		<div style={appStyle}>
+			<AuthContext.Provider value={{ loggedIn , setLoggedIn }}>	
+				<Header />
+				<Routes />
+			</AuthContext.Provider>		
+			<Footer />
+		</div>
 	)
 }
+export default App;
+

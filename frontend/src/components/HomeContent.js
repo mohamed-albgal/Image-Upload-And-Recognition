@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import SearchBar from "./SearchBar";
-import ImageDisplay from "./ImageDisplay"
+import ImageDisplay from "./ImageDisplay";
 import credentials from "./keys.js";
 import Unsplash from 'unsplash-js';
-
 
 const HomeContent = () => {
 	const [searchTerm, setSearchTerm] = useState("");
@@ -16,11 +15,10 @@ const HomeContent = () => {
 
 	useEffect(() => {
 		requestAndSetImageObjects(searchTerm ? searchTerm: defaultTerm());
-		// console.log('run', searchTerm + "1", defaultTerm.defaultTerm)
 	}, [searchTerm])
 
 	const requestAndSetImageObjects = async (term) => {
-		try{
+		try {
 			let unsplash =  new Unsplash({accessKey:credentials.unsplash.ACCESS_KEY});
 			let response = await unsplash.search.photos(term, 2, 10);
 			let data = await response.json();

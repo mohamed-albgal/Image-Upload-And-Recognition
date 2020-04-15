@@ -1,34 +1,29 @@
 import React , {useState} from 'react'
-import ImageUploader from 'react-images-upload'
+import { PhotoPicker } from 'aws-amplify-react';
+import { API } from 'aws-amplify' 
+//import ImageUploader from 'react-images-upload'
 
 /*
 source:
 https://www.npmjs.com/package/react-images-upload
 */
-const ImageUpload =() => {
-	const [imageUploads, setImageUploads] = useState([])
+const ImageUpload = () => {
+	const [imageUpload, setImageUpload] = useState("")
 	const imageDrop = (pic) => {
-		setImageUploads(imageUploads.concat(pic));
-		console.log(imageUploads)
+		setImageUpload(pic);
+		console.log(imageUpload)
 	}
 	return (
-            <ImageUploader
-                withIcon={false}
-                buttonText='Upload Images'
-                onChange={imageDrop}
-                imgExtension={['.jpg','.png']}
-                maxFileSize={5242880}
-                buttonClassName='ui button'
-
-
-            />
+        <div className='ui container'>
+            <PhotoPicker preview='hidden' onPick={d => console.log(d)} />
+        </div>
         );
 }
 
-export default ImageUpload
+export default ImageUpload;
+
 
 /*
-
 add any of these props to modify behavior: note
 
 parameter	type	default	description
