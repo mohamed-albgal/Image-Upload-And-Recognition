@@ -1,21 +1,51 @@
-import React , {useState} from 'react'
-import { PhotoPicker } from 'aws-amplify-react';
-import { API } from 'aws-amplify' 
-//import ImageUploader from 'react-images-upload'
+import React , {useState, useEffect} from 'react'
+import { Auth, Storage } from 'aws-amplify' 
+import ImageUploader from 'react-images-upload'
 
 /*
 source:
 https://www.npmjs.com/package/react-images-upload
 */
 const ImageUpload = () => {
-	const [imageUpload, setImageUpload] = useState("")
-	const imageDrop = (pic) => {
-		setImageUpload(pic);
-		console.log(imageUpload)
+	const [imageUpload, setImageUpload] = useState(null)
+	const [loading, setLoading] = useState("");
+	const [error, setError] = useState(false);
+	const errorMsg = "There was an error uploading that file"
+	useEffect( () => {
+		processUpload(imageUpload);
+	},[imageUpload])
+	
+	const processUpload = async (img) => {
+		if (!imageUpload) return
+		setLoading('loading');
+		console.log(imageUpload);
+		const filename = `${Date.now()} - ${img.name}`;
+		try {
+			const storedFile = await Storage.vault.put(filename, img, {
+				contentType: img.type, 
+			});
+			console.log(storedFile)
+			setLoading("");
+		}catch(err){
+			setError(true);
+			setLoading("");
+			console.log(err);
+		};
 	}
 	return (
-        <div className='ui container'>
-            <PhotoPicker preview='hidden' onPick={d => console.log(d)} />
+		<div className='ui container'>
+			{error && 
+				(<div className={`ui warning message`}>
+					<div className="header"> {errorMsg}</div>
+				</div>)}
+			<ImageUploader
+			withIcon={true}
+			buttonText='Upload An Image'
+			buttonClassName={`ui secondary ${loading} button`}
+			onChange={f => setImageUpload(f)}
+			imgExtension={['.jpg', '.png']}
+			maxFileSize={5242880}
+			/>
         </div>
         );
 }

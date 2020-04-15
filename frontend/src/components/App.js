@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './Header'
 import Footer from './Footer'
 import Routes from './Routes'
 import { Amplify, Auth } from 'aws-amplify'
 import {AuthContext} from './AuthContext'
 import awsConfig from '../config'
-import { Redirect } from 'react-router-dom';
 Amplify.configure(awsConfig.amplify);
 
 const appStyle =  {
@@ -29,6 +28,7 @@ const App =  () => {
 			console.log(err);
 		}
 	}
+	
 	return (
 		<div style={appStyle}>
 			<AuthContext.Provider value={{ loggedIn , setLoggedIn }}>	

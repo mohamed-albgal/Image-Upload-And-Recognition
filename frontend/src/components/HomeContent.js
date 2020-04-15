@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import SearchBar from "./SearchBar";
 import ImageDisplay from "./ImageDisplay";
+import ImageUpload from './ImageUpload'
 import credentials from "./keys.js";
 import Unsplash from 'unsplash-js';
 
@@ -38,6 +39,7 @@ const HomeContent = () => {
 
 	return (
 		<div className=" ui container" style={{marginTop: '40px'}}>
+			<ImageUpload />
 			<SearchBar extractTerm={setSearchTerm} />
 			<ImageDisplay searchTerm={searchTerm} images={images} />
 		</div>
