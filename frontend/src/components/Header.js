@@ -7,9 +7,7 @@ const Header = () => {
 	return (
 		<div className=" ui  menu">
 			<Link to='/' className='float left raised header item'>Object Recognition Tool</Link>
-			{loggedIn ? 
-				(<div className='ui menu'>
-					<div className='item'>Logout</div></div>)
+			{loggedIn ? <NavLink to='/signin' className='item'>Logout</NavLink>
 			:
 				(<div className='ui menu'>
 					<NavLink to='signin' className= 'item'> Sign-In </NavLink>
