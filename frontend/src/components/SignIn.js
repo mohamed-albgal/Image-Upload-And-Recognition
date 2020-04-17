@@ -23,7 +23,8 @@ const SignIn = () => {
     try {
       setIsLoading("loading")
       await Auth.signIn(email, password);
-      setLoggedIn(true);
+      const user = await Auth.currentUserInfo();
+      setLoggedIn({id:user.id, username:user.username, email: user.attributes.email});
       setIsLoading("");
       setErrorState("success")
       setTimeout(() => history.push('/'), 700);

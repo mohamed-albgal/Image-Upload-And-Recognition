@@ -12,14 +12,17 @@ const appStyle =  {
 }
 
 const App =  () => {
-	const [loggedIn, setLoggedIn] = useState(false);
+	const [loggedIn, setLoggedIn] = useState(null);
 	useEffect(() =>{
-		checkForSession();
+		if (!loggedIn)
+			checkForSession();
 	},[])
 
 	const checkForSession = async () => {
 		await Auth.currentSession();
-		setLoggedIn(true);
+		const user = await Auth.currentUserInfo();
+		console.log(user.username, 'is the username')
+		setLoggedIn({id:user.id, username:user.username, email: user.attributes.email});
 	}
 	
 	return (

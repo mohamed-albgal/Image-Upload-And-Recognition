@@ -2,16 +2,6 @@ import React , {useState, useEffect} from 'react'
 import { Auth, Storage } from 'aws-amplify' 
 import ImageUploader from 'react-images-upload'
 
-/*
-source:
-https://www.npmjs.com/package/react-images-upload
-*/ 
-// const s3 = new AWS.S3({
-//     region: 'us-west-1',
-//     params: {
-//       Bucket: config.s3.BUCKET,
-//     }
-//   });
 const ImageUpload = () => {
 	const [imageUpload, setImageUpload] = useState(null)
 	const [loading, setLoading] = useState("");
@@ -43,13 +33,14 @@ const ImageUpload = () => {
 			{error && 
 				(<div className={`ui warning message`}>
 					<div className="header"> {errorMsg}</div>
-				</div>)}
+				</div>)
+			}
 			<ImageUploader
 			withIcon={true}
 			buttonText='Upload An Image'
 			buttonClassName={`ui secondary ${loading} button`}
 			onChange={f => setImageUpload(f[0])}
-			imgExtension={['.jpg', '.png']}
+			imgExtension={['.jpg', '.png', '.pdf', '.gif', '.svg']}
 			maxFileSize={5242880}
 			/>
         </div>

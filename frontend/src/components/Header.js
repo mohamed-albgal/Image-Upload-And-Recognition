@@ -8,14 +8,20 @@ const Header = () => {
 	
 	const handleLogout = async () => {
 		await Auth.signOut();
-		setLoggedIn(false);
+		setLoggedIn(null);
    }
 	return (
 		<div className=" ui  menu">
-			<Link to='/' className='float left raised header item'>Object Recognition Tool</Link>
-			{loggedIn ? <NavLink to='/signin' className='item' onClick={handleLogout}>Logout</NavLink>
+		<Link to='/' className=' ui black massive label header item'>Object Recognition Tool</Link>
+			{loggedIn ? 
+				
+				<div className= 'ui float right menu'>
+					<div className='ui blue top attached large label'>Logged in as: {loggedIn.email}</div>
+					<NavLink to='/signin' className=' ui black top right attached large label' onClick={handleLogout}>Logout</NavLink>
+					<NavLink to='/photos' className='ui large black label header item'>My Photos</NavLink>
+				</div>
 			:
-				(<div className='ui menu'>
+				(<div className='ui float right menu'>
 					<NavLink to='signin' className= 'item'> Sign-In </NavLink>
 					<NavLink to='/signup' className="item"> Sign-Up </NavLink>
 				</div>)

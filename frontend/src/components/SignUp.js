@@ -5,8 +5,8 @@ import { Auth } from 'aws-amplify'
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [password2, setpassword2] = useState(false);
+  const [password, setPass] = useState("");
+  const [pass2, setPass2] = useState(false);
   const [loading, setLoading] = useState("");
   const [errorMsg, setErrorMsg ] = useState("");
   const [errorStatus, setErrorStatus] = useState(false);
@@ -18,25 +18,24 @@ const SignUp = () => {
     event.preventDefault();
     setLoading("loading")
     try {
-      if (password !== password2)
+      if (password !== pass2)
       {
         throw new Error("The entered passwords do not match")
       }
-      const creds = {username:email, password:password};
-      console.log(JSON.stringify(creds));
-      await Auth.signUp(creds);
+      await Auth.signUp({username:email, password:password});
+      setLoading("");
       setConfirmation(true)
-      await Auth.signIn(email, password);
-      setLoggedIn(true);
-      history.push('/')
+      setErrorMsg("");
+      setErrorStatus(false);
+      
+      // await Auth.signIn(email, password);
+      // setLoggedIn(true);
+      // history.push('/')
     }catch (err){
-      alert('error signing in');
-      console.log('error in state:')
-      console.log(errorStatus)
-      console.log(errorMsg)
       setLoading("");
       setErrorStatus(true)
       setErrorMsg(err.message)
+      console.log('error in signup page handling signup')
       
       
     }
@@ -48,7 +47,9 @@ const SignUp = () => {
       try {
         await Auth.confirmSignUp(email, confirmation);
         await Auth.signIn(email, password);
-        setLoggedIn(true); 
+        const user = await Auth.currentUserInfo();
+        setLoggedIn({id:user.id, username:user.username, email: user.attributes.email});
+        setLoading("");
         history.push('/')
       }catch(err) {
         setLoading("")
@@ -61,23 +62,30 @@ const SignUp = () => {
 	return (
       <div style={{width: '50%',margin:'auto'}}>
       {errorStatus && 
-        (<div className={`ui warning message`}>
+        <div className={`ui warning message`}>
           <div className="header"> {errorMsg}</div>
-       </div>)}
+        </div>
+       }
        {confirmation ? (
-        <form className={`ui ${loading} form ${errorStatus && 'error'} raised segment`}  onSubmit={e => handleConfirmation(e)}>
-          <div className=" required field">
-          <label>Confirmation Code</label>
-            <input type="text" name="confirmationcode" required onChange={e => setConfirmation(e.target.value)}/>
+        <div> 
+          <div className={`ui warning message`}>
+            <div className="header"><p>Please enter the confirmation code sent to your email</p></div>
           </div>
-          <button 
-          style={{backgroundColor:"#1b1c1d",color:'#f9f8ff',padding:'1em'}} 
-          className="ui fluid large button"
-          >Verify</button>
-          </form>
+          <form className={`ui ${loading} form ${errorStatus && 'error'} raised segment`}  onSubmit={e => handleConfirmation(e)}>
+            
+            <div className="required field">
+            <label>Confirmation Code</label>
+              <input type="text" required onChange={e => setConfirmation(e.target.value)}/>
+            </div>
+            <button 
+            style={{backgroundColor:"#1b1c1d",color:'#f9f8ff',padding:'1em'}} 
+            className="ui fluid large button"
+            >Verify</button>
+            </form>
+          </div>
        )
        :
-      (<form className={`ui ${loading}  form ${errorStatus} raised segment`} onSubmit={e => handleSignUp(e)}>
+      (<form className={`ui ${loading}  form raised segment`} onSubmit={e => handleSignUp(e)}>
         <div className="required field">
           <h1>Sign Up</h1>
           <label>Email</label>
@@ -89,11 +97,11 @@ const SignUp = () => {
         </div>
         <div className=" required field">
         <label>Password</label>
-          <input type="password" autoComplete='new-password' name="password" required minLength='8' onChange={e => setPassword(e.target.value)}/>
+          <input type="password" autoComplete='new-password' name="password" required minLength='8' onChange={e => setPass(e.target.value)}/>
         </div>
         <div className = " required field">
           <label>Re-Type Password</label>
-          <input type="password" autoComplete='new-password' name="retypedpassword" required minLength='8' onChange={e => setpassword2(e.target.value)}/>
+          <input type="password" autoComplete='new-password' name="retypedpassword" required minLength='8' onChange={e => setPass2(e.target.value)}/>
         </div>
         <button 
         style={{backgroundColor:"#1b1c1d",color:'#f9f8ff',padding:'1em'}} 

@@ -7,7 +7,7 @@ react photo gallery
 https://www.npmjs.com/package/react-photo-gallery
 */
 
-const ImageDisplay = ({searchTerm, images}) => {
+const ImageDisplay = ({images}) => {
 	const [currentImage, setCurrentImage] = useState(0);
   	const [viewerIsOpen, setViewerIsOpen] = useState(false);
 
