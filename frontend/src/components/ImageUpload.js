@@ -5,7 +5,13 @@ import ImageUploader from 'react-images-upload'
 /*
 source:
 https://www.npmjs.com/package/react-images-upload
-*/
+*/ 
+// const s3 = new AWS.S3({
+//     region: 'us-west-1',
+//     params: {
+//       Bucket: config.s3.BUCKET,
+//     }
+//   });
 const ImageUpload = () => {
 	const [imageUpload, setImageUpload] = useState(null)
 	const [loading, setLoading] = useState("");
@@ -42,7 +48,7 @@ const ImageUpload = () => {
 			withIcon={true}
 			buttonText='Upload An Image'
 			buttonClassName={`ui secondary ${loading} button`}
-			onChange={f => setImageUpload(f)}
+			onChange={f => setImageUpload(f[0])}
 			imgExtension={['.jpg', '.png']}
 			maxFileSize={5242880}
 			/>
@@ -80,5 +86,16 @@ errorStyle	Object	-	Inline styles for errors
 singleImage	Boolean	false	If true, only a single image c
 
 
+
+*/
+
+/*
+	s3 amplify bug issue:
+		uploading gave a 'No Credentials' error
+		the identity pool was not set up correctly,
+		the user was entered into the user pool, but not the identity pool resulting an authed user with no access permissions
+		i made a new identity pool with an 'Authed Iam Role' with the proper permission, then registered the provider as cognito with my cognito 
+		userpool id and app client id
+		the result worked
 
 */

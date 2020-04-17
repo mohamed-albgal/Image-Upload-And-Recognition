@@ -18,6 +18,9 @@ const Routes = () => {
                 <SignIn />
             </Route>
             <Route path="/signUp"><SignUp /></Route>
+            <Route>
+                <h1 className= 'ui massive segment'> PAGE NOT FOUND </h1>
+            </Route>
         </Switch>
     )
 }

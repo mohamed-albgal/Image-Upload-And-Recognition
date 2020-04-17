@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Header from './Header'
 import Footer from './Footer'
 import Routes from './Routes'
-import { Amplify, Auth } from 'aws-amplify'
+import { Auth } from 'aws-amplify'
 import {AuthContext} from './AuthContext'
-import awsConfig from '../config'
-Amplify.configure(awsConfig.amplify);
 
 const appStyle =  {
   height: '100%',
@@ -20,13 +18,8 @@ const App =  () => {
 	},[])
 
 	const checkForSession = async () => {
-		try {
-			await Auth.currentSession();
-			setLoggedIn(true);
-		}catch(err) {
-			console.log('no session');
-			console.log(err);
-		}
+		await Auth.currentSession();
+		setLoggedIn(true);
 	}
 	
 	return (

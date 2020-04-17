@@ -39,8 +39,9 @@ const HomeContent = () => {
 
 	return (
 		<div className=" ui container" style={{marginTop: '40px'}}>
-			<ImageUpload />
+			
 			<SearchBar extractTerm={setSearchTerm} />
+			<ImageUpload />
 			<ImageDisplay searchTerm={searchTerm} images={images} />
 		</div>
 	)
