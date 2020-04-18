@@ -40,7 +40,7 @@ const ImageUpload = () => {
 			buttonText='Upload An Image'
 			buttonClassName={`ui secondary ${loading} button`}
 			onChange={f => setImageUpload(f[0])}
-			imgExtension={['.jpg', '.png', '.pdf', '.gif', '.svg']}
+			imgExtension={['.jpg', '.png', '.jpeg']}
 			maxFileSize={5242880}
 			/>
         </div>

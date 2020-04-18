@@ -17,7 +17,7 @@ const Routes = () => {
                 {loggedIn ? <HomeContent /> : <SignIn />}
             </Route>
             <Route exact path='/photos'>
-                {loggedIn ? <UserImageDisplay /> : <InvalidRoutePage/>}
+                {loggedIn ? <UserImageDisplay /> : <InvalidRoutePage />}
             </Route>
             <Route path='/signin'>
                 <SignIn />

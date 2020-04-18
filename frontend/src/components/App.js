@@ -15,14 +15,17 @@ const App =  () => {
 	const [loggedIn, setLoggedIn] = useState(null);
 	useEffect(() =>{
 		if (!loggedIn)
-			checkForSession();
+			checkForSession().then(() => console.log('authed from main app section'));
 	},[])
 
 	const checkForSession = async () => {
-		await Auth.currentSession();
-		const user = await Auth.currentUserInfo();
-		console.log(user.username, 'is the username')
-		setLoggedIn({id:user.id, username:user.username, email: user.attributes.email});
+		try {
+			//await Auth.currentSession();
+			const user = await Auth.currentUserInfo();
+			setLoggedIn({id:user.id, username:user.username, email: user.attributes.email});
+		}catch(err){
+			console.log('error from App, can"t check session');
+		}
 	}
 	
 	return (

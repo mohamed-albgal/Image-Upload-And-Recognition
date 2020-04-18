@@ -5,11 +5,12 @@ const style = {
     background: 'f9f8ff',
     fontSize: '5em'
 }
-export default ()=> (
+
+export default ({authed})=> (
     <div style={style} className='ui inverted error message'>
         <div className='ui container'>
-            <h1 className='ui segment ui message'> 4️⃣0️4️⃣ </h1>
-            <p> This page may not exist, if it should <span><Link to='/signin'>Sign In!</Link></span></p>
+            <h1 className='ui segment ui message'> 404 Error 🚑 </h1>
+            <p> This page does not exist or you are not authorized to view it</p> 
         </div>
     </div>
 )
