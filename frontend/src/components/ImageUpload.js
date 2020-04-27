@@ -1,5 +1,5 @@
 import React , {useState, useEffect} from 'react'
-import { Auth, Storage } from 'aws-amplify' 
+import { Auth, Storage } from 'aws-amplify'
 import ImageUploader from 'react-images-upload'
 
 const ImageUpload = () => {
@@ -10,7 +10,7 @@ const ImageUpload = () => {
 	useEffect( () => {
 		processUpload(imageUpload);
 	},[imageUpload])
-	
+
 	const processUpload = async (img) => {
 		if (!imageUpload) return
 		setLoading('loading');
@@ -18,19 +18,19 @@ const ImageUpload = () => {
 		const filename = `${Date.now()} - ${img.name}`;
 		try {
 			const storedFile = await Storage.vault.put(filename, img, {
-				contentType: img.type, 
+				contentType: img.type,
 			});
 			console.log(storedFile)
-			setLoading("");
 		}catch(err){
 			setError(true);
-			setLoading("");
 			console.log(err);
+		} finally {
+			setLoading("");
 		};
 	}
 	return (
 		<div className='ui container'>
-			{error && 
+			{error &&
 				(<div className={`ui warning message`}>
 					<div className="header"> {errorMsg}</div>
 				</div>)
@@ -85,7 +85,7 @@ singleImage	Boolean	false	If true, only a single image c
 		uploading gave a 'No Credentials' error
 		the identity pool was not set up correctly,
 		the user was entered into the user pool, but not the identity pool resulting an authed user with no access permissions
-		i made a new identity pool with an 'Authed Iam Role' with the proper permission, then registered the provider as cognito with my cognito 
+		i made a new identity pool with an 'Authed Iam Role' with the proper permission, then registered the provider as cognito with my cognito
 		userpool id and app client id
 		the result worked
 

@@ -15,7 +15,7 @@ const App =  () => {
 	const [loggedIn, setLoggedIn] = useState(null);
 	useEffect(() =>{
 		if (!loggedIn)
-			checkForSession().then(() => console.log('authed from main app section'));
+			checkForSession();
 	},[])
 
 	const checkForSession = async () => {
@@ -27,13 +27,13 @@ const App =  () => {
 			console.log('error from App, can"t check session');
 		}
 	}
-	
+
 	return (
 		<div style={appStyle}>
-			<AuthContext.Provider value={{ loggedIn , setLoggedIn }}>	
+			<AuthContext.Provider value={{ loggedIn , setLoggedIn }}>
 				<Header />
 				<Routes />
-			</AuthContext.Provider>		
+			</AuthContext.Provider>
 			<Footer />
 		</div>
 	)

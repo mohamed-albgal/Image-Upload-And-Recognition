@@ -1,18 +1,7 @@
-
-//use the Image display component
-
-/*
-    this needs to be refactored, is copied code from the homecontent component,
-    should be: just pass the component an array
-*/
-
-
-import React, {useState, useEffect, useContext } from 'react'
+import React, {useState, useEffect} from 'react'
 import { Storage} from 'aws-amplify'
 import "./ImageDisplay.css"
-import { AuthContext } from './AuthContext';
 import ImageDisplay from './ImageDisplay';
-import { render } from '@testing-library/react';
 
 const UserImageDisplay = () => {
     const [images, setImages] = useState([]);
@@ -25,14 +14,11 @@ const UserImageDisplay = () => {
         try {
             setLoading('loading');
             //first param must be an empty string
-            //photes are stored like: bucket: 
+            //photes are stored like: _bucketName_:private:_identity_id_/*
             const s3Response = await Storage.list("", { level:"private"});
             const urls = [];
             for (let i = 0; i < s3Response.length; i++) {
-                console.log(s3Response[i], 'is the image key im trying to get a url for');
                 let url = await Storage.vault.get(s3Response[i].key);
-                console.log('key I got back:')
-                console.dir(url);
                 urls.push(url);
             }
             const imageObjects = urls.map(url => {
@@ -44,7 +30,6 @@ const UserImageDisplay = () => {
                 }
                 return newObj;
             });
-            console.log('the array of objects:', imageObjects)
             setImages(imageObjects);
         }catch (err) {
             console.log(err.message);
@@ -54,7 +39,6 @@ const UserImageDisplay = () => {
     }
     return (
         <div className="ui container">
-        <div style={{width:'3em', height:'3em', textAlign:'center'}} className="ui blue circular massive icon button">+</div>
             <div className={`ui ${loading} attached segment`}>
                     <ImageDisplay images={images} />
             </div>

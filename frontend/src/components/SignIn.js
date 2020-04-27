@@ -17,7 +17,7 @@ const SignIn = () => {
     success: "Success, Welcome Back!",
     error: "Credentials Unreconized, Please Try Again"
   }
-  
+
   const handleSignIn = async (event) => {
     event.preventDefault();
     try {
@@ -25,17 +25,17 @@ const SignIn = () => {
       await Auth.signIn(email, password);
       const user = await Auth.currentUserInfo();
       setLoggedIn({id:user.id, username:user.username, email: user.attributes.email});
-      setIsLoading("");
       setErrorState("success")
       setTimeout(() => history.push('/'), 700);
     }catch (err){
-      setIsLoading("");
       setErrorState("error");
+    }finally {
+      setIsLoading("");
     }
   }
 	return (
       <div style={{width: '50%',margin:'auto'}}>
-      {errorState && 
+      {errorState &&
       (<div className={`ui ${errorState} message`}>
         <div className="header">{errorMsgs[errorState]}</div>
       </div>)}
@@ -49,8 +49,8 @@ const SignIn = () => {
         <label>Password</label>
           <input type="password" autoComplete='current-password' name="password" required minLength='8' onChange={e => setPassword(e.target.value)}/>
         </div>
-        <button 
-        style={{backgroundColor:"#1b1c1d",color:'#f9f8ff',padding:'1em'}} 
+        <button
+        style={{backgroundColor:"#1b1c1d",color:'#f9f8ff',padding:'1em'}}
         className="ui fluid large button"
         >Sign In</button>
     </form>

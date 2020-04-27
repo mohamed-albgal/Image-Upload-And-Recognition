@@ -21,7 +21,8 @@ const ImageDisplay = ({images}) => {
     	setViewerIsOpen(false);
   	};
 
-  /*given a an array of image object with shape:
+  /*given a
+   an array of image object with shape:
     {
       src: String
       width: Number,

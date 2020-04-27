@@ -33,13 +33,11 @@ const HomeContent = () => {
 			}));
 		}catch(err){
 			console.log(err)
-			return 'unable to reach api'
 		}
 	}
 
 	return (
 		<div className=" ui container" style={{marginTop: '40px'}}>
-			
 			<SearchBar extractTerm={setSearchTerm} />
 			<ImageUpload />
 			<ImageDisplay searchTerm={searchTerm} images={images} />
