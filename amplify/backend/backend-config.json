@@ -1,0 +1,16 @@
+{
+	"auth": {
+		"ort9c696381": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [],
+			"customAuth": false
+		}
+	},
+	"storage": {
+		"ortUploads": {
+			"service": "S3",
+			"providerPlugin": "awscloudformation"
+		}
+	}
+}
